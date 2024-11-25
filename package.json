@@ -3,6 +3,22 @@
   "displayName": "mp_image_helper",
   "description": "an extension to make svg development easier",
   "version": "0.1.1",
+  "publisher": "lyon",
+  "author": {
+    "name": "lyon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/icycommond/mpimagehelper"
+  },
+  "icon": "images/icon.png",
+  "keywords": [
+    "image",
+    "svg",
+    "preview",
+    "helper"
+  ],
+  "license": "MIT",
   "engines": {
     "vscode": "^1.94.0"
   },
@@ -25,6 +41,7 @@
         "mpimagehelper.languages": {
           "type": "array",
           "default": [
+            "xml",
             "html",
             "markdown",
             "vue",
