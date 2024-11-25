@@ -1,6 +1,6 @@
 import vscode, { TextDocument, Position } from "vscode";
 import path from "path";
-import { extraPath, fetchImgInfo, IMAGE_TYPE } from "./utils";
+import { extraPath, fetchImgInfo, IMAGE_TYPE, urlRegexp } from "./utils";
 
 interface PluginSettings {
   /** 预览图片的宽度 */
@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
             editor.edit((editBuilder) => {
               const range = document.getWordRangeAtPosition(
                 targetPosition,
-                /((https?):)?\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/g
+                urlRegexp
               );
               console.log(`range editor: ${JSON.stringify(range)}`);
               if (range) {
@@ -112,9 +112,9 @@ export function activate(context: vscode.ExtensionContext) {
 
       const {width, height} = await fetchImgInfo(originalImage);
       
-      const range = document.getWordRangeAtPosition(position, /https?:\/\/\S+/);
+      const range = document.getWordRangeAtPosition(position, urlRegexp);
       const markdownString = new vscode.MarkdownString(
-        `<p>${width} x ${height}</p><a href="command:extension.replaceImageUrl?${encodeURIComponent(
+        `<p>${width} x ${height}</p><p>${url}</p><a href="command:extension.replaceImageUrl?${encodeURIComponent(
           JSON.stringify(range)
         )}"><img src="${url}" width="${previewWidth}" /></a>`
       );

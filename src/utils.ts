@@ -15,6 +15,10 @@ export interface IImage {
   path: string;
 }
 
+/** 远程图片的正则 */
+export const urlRegexp =
+    /https?:\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|](?=&quot;|[\s)])/g;
+
 /**
  * 图片是否有协议头
  * @param {IImage} image 图片
@@ -47,9 +51,7 @@ export function extraOnlinePath(
   content: string,
   { ignore, col }: { ignore?: (string | RegExp)[]; col?: number } = {}
 ) {
-  const regexp =
-    /((https?):)?\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/g;
-  const res = content.match(regexp);
+  const res = content.match(urlRegexp);
   if (res === null) {
     return null;
   }
